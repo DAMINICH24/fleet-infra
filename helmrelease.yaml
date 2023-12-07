@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: GA-app
+  namespace: default
+spec:
+  releaseName: GA-app
+    #chart:
+    #repository: GA-repo
+    #name: GA-chart
+    #version: GA-version
+    #values:
+    #your: values
+  install:
+    createNamespace: true
+  interval:
+    cron: "*/5 * * * *"
+      #eventListeners:
+      #- name: github-actions-listener
+      #namespace: flux-system
+      #serviceAccountName: flux
+

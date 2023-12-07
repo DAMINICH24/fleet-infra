@@ -1,0 +1,25 @@
+name: PR Notification
+
+on:
+  repository_dispatch:
+    types:
+      - flux-deployment
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Notify on Flux Deployment
+        run: |
+          if [ "${{ github.event.client_payload.status }}" = "success" ]; then
+            echo "Deployment successful! Notify on the PR."
+            # Add your notification logic here (e.g., using GitHub API or comments on the PR)
+          elif [ "${{ github.event.client_payload.status }}" = "failure" ]; then
+            echo "Deployment failed! Notify on the PR."
+            # Add your notification logic here (e.g., using GitHub API or comments on the PR)
+          fi
+
