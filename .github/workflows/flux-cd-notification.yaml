@@ -1,0 +1,23 @@
+name: Flux CD Notification
+
+on:
+  deployment:
+    types:
+      - created
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Notify Flux CD
+      run: |
+        curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" \
+          -d '{"event_type": "flux-deployment-success", "client_payload": {"cluster": "minikube"}}' \
+          https://api.github.com/repos/${{ github.repository }}/dispatches
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
